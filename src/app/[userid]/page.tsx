@@ -6,11 +6,12 @@ interface UserData {
 }
 
 interface PageProps {
-  params: { userid: string };
+  params: { userid: string };  // Ensure this matches your route parameter type
 }
 
 const Page = async ({ params }: PageProps) => {
-  const { userid } = await params; 
+  // Awaiting params to resolve it correctly
+  const { userid } =  params; // This ensures you are correctly handling params
 
   let userData: UserData | null = null;
   let error: string | null = null;
@@ -29,7 +30,6 @@ const Page = async ({ params }: PageProps) => {
       {userData ? (
         <div>
           <p>User Name: {userData.userName}</p>
-        
         </div>
       ) : (
         <p>No user data available.</p>

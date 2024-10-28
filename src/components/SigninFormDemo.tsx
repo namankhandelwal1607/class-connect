@@ -7,10 +7,12 @@ import axios, { AxiosError } from "axios";
 import { ToastContainer, toast } from "react-toastify"; 
 import 'react-toastify/dist/ReactToastify.css'; 
 import { FaCheckCircle } from 'react-icons/fa'; 
+import { useRouter } from "next/navigation";
 
 export function SigninFormDemo() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const sendData = async () => {
     const data = {
@@ -21,7 +23,12 @@ export function SigninFormDemo() {
     try {
       const response = await axios.post("https://classroom-api-bice.vercel.app/signIn", data);
       console.log("Success:", response.data);
-      
+      console.log('User ID:', response.data.userData._id);
+      const userId = response.data.userData._id;
+      setTimeout(() => {
+        router.push(`/${userId}`)
+      }, 900)
+
       toast.success(
         <div className="flex items-center">
           <FaCheckCircle className="mr-2 text-green-500" />

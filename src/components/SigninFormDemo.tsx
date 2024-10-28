@@ -8,10 +8,9 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; 
 import { FaCheckCircle } from 'react-icons/fa'; 
 
-export function SignupFormDemo() {
+export function SigninFormDemo() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   const sendData = async () => {
     const data = {
@@ -20,14 +19,13 @@ export function SignupFormDemo() {
     };
 
     try {
-      const response = await axios.post("https://classroom-api-bice.vercel.app/signUp", data);
+      const response = await axios.post("https://classroom-api-bice.vercel.app/signIn", data);
       console.log("Success:", response.data);
       
-      // Show success toast notification
       toast.success(
         <div className="flex items-center">
           <FaCheckCircle className="mr-2 text-green-500" />
-          Account created successfully!
+          Signed In successfully!
         </div>
       );
     } catch (error) {
@@ -42,22 +40,17 @@ export function SignupFormDemo() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-    if (password !== confirmPassword) {
-      console.log("Password and Confirm Password must be the same");
-    } else {
-      sendData();
-    }
+    console.log("Password:", password);   
+    sendData();
   };
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mt-5">
+    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome to ClassConnect
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        SignUp to ClassConnect
+        Sign In to ClassConnect
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>
@@ -79,16 +72,6 @@ export function SignupFormDemo() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
-        </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
-          <Label htmlFor="confirmPassword">Confirm Password</Label>
-          <Input
-            id="confirmPassword"
-            placeholder="••••••••"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </LabelInputContainer>
 

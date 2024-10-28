@@ -14,8 +14,21 @@
   }
 }
 
-body {
+html, body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+  
+  /* Hide scrollbars globally for x and y directions */
+  overflow: hidden;
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  width: 0; /* For Chrome, Safari, and Opera */
+  height: 0;
+}
+
+html, body {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
 }

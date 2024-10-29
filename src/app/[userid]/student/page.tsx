@@ -1,10 +1,8 @@
-import React from 'react';
+'use client'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { usePathname } from 'next/navigation';
 import { CardHoverEffectDemo } from '@/components/CardHoverEffectDemo';
-
-interface PageProps {
-  params: Promise<{ userid: string }>;
-}
 
 interface ClassDetails {
   classId: string;
@@ -12,24 +10,47 @@ interface ClassDetails {
   classDescription: string;
 }
 
-const page = async ({ params }: PageProps) => {
-  const { userid } = await params;
+interface Project {
+  title: string;
+  description: string;
+  link: string;
+}
 
-  const response = await axios.get(`https://classroom-api-bice.vercel.app/getClassesEnrolled/${userid}`);
-  const classIds = response.data.classStudent;
+const Page = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const currentRoute = usePathname();
+  const segments = currentRoute?.split('/').filter(Boolean);
+  const userid = segments?.[segments.length - 2];
 
-  const classDetailsPromises = classIds.map(async (classId: string) => {
-    const classResponse = await axios.get(`https://classroom-api-bice.vercel.app/getClassDetails/${classId}`);
-    return { ...classResponse.data, classId }; 
-  });
+  useEffect(() => {
+    const fetchClassDetails = async () => {
+      try {
+        const response = await axios.get(`https://classroom-api-bice.vercel.app/getClassesEnrolled/${userid}`);
+        const classIds = response.data.classStudent;
 
-  const classDetails: ClassDetails[] = await Promise.all(classDetailsPromises);
+        const classDetailsPromises = classIds.map(async (classId: string) => {
+          const classResponse = await axios.get(`https://classroom-api-bice.vercel.app/getClassDetails/${classId}`);
+          return { ...classResponse.data, classId };
+        });
 
-  const projects = classDetails.map(classDetail => ({
-    title: classDetail.className,
-    description: classDetail.classDescription,
-    link: `/${userid}/student/${classDetail.classId}`, 
-  }));
+        const classDetails: ClassDetails[] = await Promise.all(classDetailsPromises);
+
+        const projectsData = classDetails.map(classDetail => ({
+          title: classDetail.className,
+          description: classDetail.classDescription,
+          link: `/${userid}/student/${classDetail.classId}`, 
+        }));
+
+        setProjects(projectsData);
+      } catch (error) {
+        console.error("Error fetching class details:", error);
+      }
+    };
+
+    if (userid) {
+      fetchClassDetails();
+    }
+  }, [userid]);
 
   return (
     <div>
@@ -41,4 +62,4 @@ const page = async ({ params }: PageProps) => {
   );
 };
 
-export default page;
+export default Page;

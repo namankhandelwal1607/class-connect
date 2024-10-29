@@ -10,11 +10,11 @@ export function PlaceholdersAndVanishInputDemo() {
   const [inputValue, setInputValue] = useState("");
   
   const placeholders = [
-    "What's the first rule of Fight Club?",
-    "Who is Tyler Durden?",
-    "Where is Andrew Laeddis Hiding?",
-    "Write a Javascript method to reverse a string",
-    "How to assemble your own PC?",
+    "Make announcment for whole class",
+    "EMail will also be send",
+    "ClassConnect make connection easier",
+    "ClassConnect make study easier",
+    "ClassConnect saves time",
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

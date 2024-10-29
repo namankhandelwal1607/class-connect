@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { CardHoverEffectDemo } from '@/components/CardHoverEffectDemo';
 import MakeAnnouncement from '@/components/MakeAnnouncement';
+import MembersButton from '@/components/MembersButton';
 interface Announcement {
   teacherName: string;
   announcement: string;
@@ -44,6 +45,7 @@ const Page = () => {
   return (
     <div>
       <MakeAnnouncement/>
+      <MembersButton/>
       <h1>Last Route Segment: {classid}</h1>
       
       <h2>Announcements:</h2>

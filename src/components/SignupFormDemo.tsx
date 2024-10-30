@@ -22,7 +22,6 @@ export function SignupFormDemo() {
     try {
       const response = await axios.post("https://classroom-api-bice.vercel.app/signUp", data);
       console.log("Success:", response.data);
-      
       // Show success toast notification
       toast.success(
         <div className="flex items-center">

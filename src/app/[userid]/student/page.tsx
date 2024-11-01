@@ -6,7 +6,6 @@ import { CardHoverEffectDemo } from '@/components/CardHoverEffectDemo';
 import StudentButton from '@/components/StudentButton';
 import TeacherButton from '@/components/TeacherButton';
 import { gsap } from 'gsap'
-import { useGSAP } from '@gsap/react'
 interface ClassDetails {
   classId: string;
   className: string;
@@ -87,17 +86,15 @@ const Page = () => {
     }
   }, [userid]);
 
-  const handleClick = () => {
-    
-  };
 
   return (
     <div className='mt-5'>
       <div id='data' className='text-[3rem] font-bold flex justify-center'>Portal</div>
       <div className='flex justify-evenly mt-[100px]'>
-      <div id='student' onClick={handleClick}><StudentButton/></div>
+      <div id='student'><StudentButton/></div>
       <div id='teacher'><TeacherButton/></div>
       </div>
+
       <div className='absolute top-5 w-[100vw]'>
       <div id='head' className='flex justify-center text-[3rem] font-bold'>Classrooms</div>
       <div className='w-[100vw]' id='classes'><CardHoverEffectDemo  projects={projects} /></div>

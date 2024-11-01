@@ -8,37 +8,26 @@ import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const [detectClick, setDetectClick] = useState(false)
+  const [detectClick1, setDetectClick1] = useState(false)
   const router = useRouter()
 
-  useGSAP(() => {
-    gsap.from('#signin', {
-        opacity: 0,
-        duration: 2,
-        x: 100
-    })
-}, [])
-
-useGSAP(() => {
-  gsap.from('#signup', {
-      opacity: 0,
-      duration: 2,
-      x: 100
-  })
-}, [])
 
 
 useEffect(() => {
   if (detectClick) {
-      gsap.to('#text-revel', {
-          x: 1200,
-          duration: 1.5
-      })
       gsap.to('#signin', {
-          x: -1000,
-          duration: 2
+          x: "-41vw",
+          duration: 1
       })
   }
-}, [detectClick])
+
+  if (detectClick1) {
+    gsap.to('#signup', {
+        x: "-46vw",
+        duration: 1
+    })
+}
+}, [detectClick, detectClick1])
 
 
 
@@ -50,6 +39,7 @@ const handleClick = () => {
 }
 
 const hanndleClick1 = ()=>{
+  setDetectClick1(true)
   setTimeout(() => {
   router.push('/signup  ')
 }, 900)
@@ -58,7 +48,6 @@ const hanndleClick1 = ()=>{
 
   return (
      <div className='scrollbar-hide'>
-    {/* Top-right positioned buttons with z-index */}
     <div className="absolute top-4 right-4 flex space-x-4 z-10">
       <div id='signin'>
         <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50" onClick={handleClick}>

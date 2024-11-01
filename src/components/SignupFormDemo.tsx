@@ -3,10 +3,7 @@ import React, { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
-import axios, { AxiosError } from "axios"; 
-import { ToastContainer, toast } from "react-toastify"; 
-import 'react-toastify/dist/ReactToastify.css'; 
-import { FaCheckCircle } from 'react-icons/fa'; 
+import axios from "axios"; 
 
 export function SignupFormDemo() {
   const [email, setEmail] = useState("");
@@ -22,13 +19,6 @@ export function SignupFormDemo() {
     try {
       const response = await axios.post("https://classroom-api-bice.vercel.app/signUp", data);
       console.log("Success:", response.data);
-      // Show success toast notification
-      toast.success(
-        <div className="flex items-center">
-          <FaCheckCircle className="mr-2 text-green-500" />
-          Account created successfully!
-        </div>
-      );
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Error:", error.response ? error.response.data : error.message);
@@ -101,9 +91,6 @@ export function SignupFormDemo() {
 
         <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
       </form>
-
-      {/* Toast Container */}
-      <ToastContainer />
     </div>
   );
 }

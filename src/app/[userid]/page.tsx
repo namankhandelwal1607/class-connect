@@ -1,41 +1,44 @@
+'use client'
 import React from 'react';
-import axios from 'axios';
 import StudentButton from '@/components/StudentButton';
 import TeacherButton from '@/components/TeacherButton';
-interface UserData {
-  userName: string;
-}
+import { gsap } from 'gsap'
+import { useGSAP } from '@gsap/react'
 
-interface PageProps {
-  params: Promise<{ userid: string }>; 
-}
 
-const Page = async ({ params }: PageProps) => {
-  const { userid } = await params; 
+const Page = () => {
 
-  let userData: UserData | null = null;
-  let error: string | null = null;
+  useGSAP(() => {
+    gsap.from('#student', {
+        opacity: 0,
+        duration: 3,
+        x: -200
+    })
 
-  try {
-    const response = await axios.get(`https://classroom-api-bice.vercel.app/getName/${userid}`);
-    userData = response.data;
-  } catch (err) {
-    error = 'Error fetching user data.';
-  }
+    gsap.from('#teacher', {
+      opacity: 0,
+      duration: 3,
+      x: 200
+  })
+
+  gsap.from('#data', {
+    opacity: 0,
+    duration: 3,
+    y: -100
+})
+
+
+}, [])
+
+
 
   return (
-    <div>
-      <StudentButton/>
-      <TeacherButton/>
-      <h1>User ID: {userid}</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {userData ? (
-        <div>
-          <p>User Name: {userData.userName}</p>
-        </div>
-      ) : (
-        <p>No user data available.</p>
-      )}
+    <div className='mt-5'>
+      <div id='data' className='text-[3rem] font-bold flex justify-center'>Portal</div>
+      <div className='flex justify-evenly mt-[100px]'>
+      <div id='student'><StudentButton/></div>
+      <div id='teacher'><TeacherButton/></div>
+      </div>
     </div>
   );
 };
